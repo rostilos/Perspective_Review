@@ -1,28 +1,42 @@
-<h1>Test</h1>
+<h2>Perspective Reviews</h2>
 
 <?php
 /** @var Perspective\Review\Block\Product\Review $block */
+/** @var Magento\Framework\Escaper $escaper */
+
+$comments = $block->getReviews();
 ?>
 <ul>
-    <?php
-    $comments = $block->getReviews();
-    ?>
-
     <?php foreach ($comments as $comment) : ?>
         <li>
-            <?= $comment->getDetail() ?> (<?= $comment->getCreatedAt() ?>)
             <?php if ($comment->getUser()) : ?>
-                <?= $block->escapeHtml($comment->getUser()->getFirstname()) ?> <?= $block->escapeHtml($comment->getUser()->getLastname()) ?>
+                <h3>
+                    <?= $block->escapeHtml($comment->getUser()->getFirstname()) ?>
+                    <?= $block->escapeHtml($comment->getUser()->getLastname()) ?>
+                </h3>
             <?php else : ?>
-                Anonymous
+                <h3>Anonymous</h3>
             <?php endif; ?>
+            <p>
+                <?= $comment->getDetail() ?>
+            </p>
+            <div>
+                <small>
+                    (<?= $comment->getCreatedAt() ?>)
+                </small>
+            </div>
         </li>
     <?php endforeach; ?>
 </ul>
+
 <div class="block review-add">
-    <div class="block-title"><strong><?= $block->escapeHtml(__('Write Your Own Review')) ?></strong></div>
+    <div class="block-title">
+        <strong>
+            <?= $escaper->escapeHtml(__('Write Your Own Review')) ?>
+        </strong>
+    </div>
     <div class="block-content">
-        <form action="<?= $block->escapeUrl($block->getUrl('perspective/index/post')) ?>"
+        <form action="<?= $escaper->escapeUrl($block->getActionUrl()) ?>"
               class="review-form"
               method="post"
               id="review-form"
@@ -33,16 +47,21 @@
             <fieldset class="fieldset review-fieldset">
                 <input type="hidden" name="id" value="<?= $block->getProduct()->getId() ?>">
                 <div class="field review-field-text required">
-                    <label for="review_field" class="label"><span><?= $block->escapeHtml(__('Review')) ?></span></label>
+                    <label for="review_field"
+                           class="label"
+                    >
+                        <span><?= $escaper->escapeHtml(__('Review')) ?></span>
+                    </label>
                     <div class="control">
-                        <textarea name="detail" id="review_field" cols="5" rows="3" data-validate="{required:true}"></textarea>
+                        <textarea name="detail" id="review_field" cols="5" rows="3"
+                                  data-validate="{required:true}"></textarea>
                     </div>
                 </div>
             </fieldset>
             <div class="actions-toolbar review-form-actions">
                 <div class="primary actions-primary">
                     <button type="submit" class="action submit primary">
-                        <span><?= $block->escapeHtml(__('Submit Review')) ?></span></button>
+                        <span><?= $escaper->escapeHtml(__('Submit Review')) ?></span></button>
                 </div>
             </div>
         </form>
