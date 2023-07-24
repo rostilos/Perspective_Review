@@ -9,7 +9,7 @@
                    as="perspective_reviews"
                    template="Perspective_Review::reviews.phtml"
                    group="detailed_info"
-                   ifconfig="catalog/review/active"
+                   ifconfig="perspective_review/general/enable"
             >
                 <arguments>
                     <argument name="sort_order" xsi:type="string">30</argument>
