@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="perspective_reviews" resource="default" engine="innodb" comment="Custom Reviews table information">
+        <column xsi:type="bigint" name="review_id" unsigned="true" nullable="false" identity="true"
+                comment="Review ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Product ID"/>
+        <column xsi:type="text" name="detail" nullable="false" comment="Detail description"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Review create date"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="review_id"/>
+        </constraint>
+
+        <constraint xsi:type="foreign" referenceId="PERSPECTIVE_REVIEWS_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ID"
+                    table="perspective_reviews" column="product_id" referenceTable="catalog_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+    </table>
+</schema>
