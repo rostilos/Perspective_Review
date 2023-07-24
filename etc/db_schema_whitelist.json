@@ -1,0 +1,16 @@
+{
+    "perspective_reviews": {
+        "column": {
+            "review_id": true,
+            "product_id": true,
+            "detail": true,
+            "created_at": true,
+            "user_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "PERSPECTIVE_REVIEWS_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ENTITY_ID": true,
+            "PERSPECTIVE_REVIEWS_USER_ID_CUSTOMER_ENTITY_ENTITY_ID": true
+        }
+    }
+}

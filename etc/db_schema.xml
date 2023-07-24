@@ -10,6 +10,7 @@
         <column xsi:type="text" name="detail" nullable="false" comment="Detail description"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Review create date"/>
+        <column xsi:type="int" name="user_id" unsigned="true" nullable="true" comment="User ID"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="review_id"/>
@@ -17,6 +18,10 @@
 
         <constraint xsi:type="foreign" referenceId="PERSPECTIVE_REVIEWS_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ID"
                     table="perspective_reviews" column="product_id" referenceTable="catalog_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="PERSPECTIVE_REVIEWS_USER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="perspective_reviews" column="user_id" referenceTable="customer_entity"
                     referenceColumn="entity_id" onDelete="CASCADE"/>
     </table>
 </schema>
