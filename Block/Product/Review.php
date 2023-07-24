@@ -2,34 +2,44 @@
 
 namespace Perspective\Review\Block\Product;
 
+use Magento\Customer\Model\Customer;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\View\Element\Template;
 use Magento\Catalog\Model\ProductFactory;
 use Perspective\Review\Model\ReviewFactory;
+use Perspective\Review\Model\ConfigManager;
+use Magento\Customer\Model\CustomerFactory;
+
 
 class Review extends Template
 {
-    /**
-     * @var ProductFactory;
-     */
-    protected $productFactory;
 
-    /**
-     * @var ReviewFactory;
-     */
-    protected $reviewFactory;
+    private ProductFactory $productFactory;
+    private ReviewFactory $reviewFactory;
+    private ConfigManager $configManager;
+    private CustomerFactory $customerFactory;
+
 
     public function __construct(
         Template\Context $context,
         ProductFactory   $productFactory,
         ReviewFactory    $reviewFactory,
+        ConfigManager    $configManager,
+        CustomerFactory  $customerFactory,
         array            $data = []
     )
     {
         parent::__construct($context, $data);
         $this->productFactory = $productFactory;
         $this->reviewFactory = $reviewFactory;
+        $this->configManager = $configManager;
+        $this->customerFactory = $customerFactory;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->configManager->isEnabled();
     }
 
     /**
@@ -66,5 +76,16 @@ class Review extends Template
     public function getActionUrl(): string
     {
         return $this->getUrl('perspective/index/post');
+    }
+
+    /**
+     * Return user info
+     *
+     * @param $userId
+     * @return Customer
+     */
+    public function getUserInfo($userId): Customer
+    {
+        return $this->customerFactory->create()->load($userId);
     }
 }

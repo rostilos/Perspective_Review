@@ -11,7 +11,7 @@ class Review extends AbstractModel
         $this->_init(\Perspective\Review\Model\ResourceModel\Review::Class);
     }
 
-    public function getUser(): mixed
+    public function getUserId(): mixed
     {
         return $this->_getData('user_id');
     }

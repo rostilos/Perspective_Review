@@ -5,14 +5,18 @@
 /** @var Magento\Framework\Escaper $escaper */
 
 $comments = $block->getReviews();
+if (!$block->isEnabled()) {
+    return;
+}
 ?>
 <ul>
     <?php foreach ($comments as $comment) : ?>
         <li>
-            <?php if ($comment->getUser()) : ?>
+            <?php if ($userId = $comment->getUserId()) : ?>
+                <?php $user = $block->getUserInfo($userId) ?>
                 <h3>
-                    <?= $block->escapeHtml($comment->getUser()->getFirstname()) ?>
-                    <?= $block->escapeHtml($comment->getUser()->getLastname()) ?>
+                    <?= $escaper->escapeHtml($user->getFirstname()) ?>
+                    <?= $escaper->escapeHtml($user->getLastname()) ?>
                 </h3>
             <?php else : ?>
                 <h3>Anonymous</h3>

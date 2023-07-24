@@ -5,6 +5,7 @@ namespace Perspective\Review\Controller\Index;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
+use Perspective\Review\Model\ConfigManager;
 use Perspective\Review\Model\ReviewFactory;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Data\Form\FormKey\Validator;
@@ -18,7 +19,8 @@ class Post extends Action
         ReviewFactory              $reviewFactory,
         Session                    $customerSession,
         ProductRepositoryInterface $productRepository,
-        Validator                  $formKeyValidator
+        Validator                  $formKeyValidator,
+        ConfigManager              $configManager
     )
     {
         parent::__construct($context);
@@ -26,21 +28,27 @@ class Post extends Action
         $this->customerSession = $customerSession;
         $this->productRepository = $productRepository;
         $this->formKeyValidator = $formKeyValidator;
+        $this->configManager = $configManager;
     }
 
     public function execute()
     {
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-
-        $productId = $this->getRequest()->getParam('id');
+        $resultRedirect->setUrl($this->_redirect->getRefererUrl());
 
         if (!$this->formKeyValidator->validate($this->getRequest())) {
-            $resultRedirect->setUrl($this->_redirect->getRefererUrl());
             return $resultRedirect;
         }
 
+        $productId = $this->getRequest()->getParam('id');
+        $customerId = $this->customerSession->getCustomerId();
         $data = $this->getRequest()->getPostValue();
+
+        if (!$this->configManager->isGuestReviewsAllowed() && !$customerId) {
+            $this->messageManager->addErrorMessage(__('You must be logged in to post a review.'));
+            return $resultRedirect;
+        }
 
         if (($product = $this->productRepository->getById($productId)) && !empty($data)) {
 
@@ -49,6 +57,7 @@ class Post extends Action
             try {
                 $review->setProductId($product->getId())
                     ->setCreatedAt(date('Y-m-d H:i:s'))
+                    ->setUserId($this->customerSession->getCustomerId())
                     ->save();
 
                 $this->messageManager->addSuccessMessage(__('You have successfully posted a review.'));
@@ -59,6 +68,6 @@ class Post extends Action
             $this->messageManager->addErrorMessage(__('We can\'t post your review right now.'));
         }
 
-        $this->_redirect('catalog/product/view', ['id' => $productId]);
+        return $resultRedirect;
     }
 }
