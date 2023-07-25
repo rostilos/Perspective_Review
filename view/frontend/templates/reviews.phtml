@@ -1,38 +1,14 @@
 <h2>Perspective Reviews</h2>
 
 <?php
-/** @var Perspective\Review\Block\Product\Review $block */
+/** @var Perspective\Review\Block\Product\ReviewList $block */
 /** @var Magento\Framework\Escaper $escaper */
 
-$comments = $block->getReviews();
+$reviews = $block->getReviewsCollection();
 if (!$block->isEnabled()) {
     return;
 }
 ?>
-<ul>
-    <?php foreach ($comments as $comment) : ?>
-        <li>
-            <?php if ($userId = $comment->getUserId()) : ?>
-                <?php $user = $block->getUserInfo($userId) ?>
-                <h3>
-                    <?= $escaper->escapeHtml($user->getFirstname()) ?>
-                    <?= $escaper->escapeHtml($user->getLastname()) ?>
-                </h3>
-            <?php else : ?>
-                <h3>Anonymous</h3>
-            <?php endif; ?>
-            <p>
-                <?= $comment->getDetail() ?>
-            </p>
-            <div>
-                <small>
-                    (<?= $comment->getCreatedAt() ?>)
-                </small>
-            </div>
-        </li>
-    <?php endforeach; ?>
-</ul>
-
 <div class="block review-add">
     <div class="block-title">
         <strong>
@@ -65,7 +41,44 @@ if (!$block->isEnabled()) {
             <div class="actions-toolbar review-form-actions">
                 <div class="primary actions-primary">
                     <button type="submit" class="action submit primary">
-                        <span><?= $escaper->escapeHtml(__('Submit Review')) ?></span></button>
+                        <span><?= $escaper->escapeHtml(__('Submit Review')) ?></span>
+                    </button>
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+<div style="clear: both"></div>
+
+
+<ul class="items review-items">
+    <?php foreach ($reviews as $review) : ?>
+        <li class="item review-item">
+            <p>
+                <small><?= __('Review by:') ?></small>
+                <?php if ($userId = $review->getUserId()) : ?>
+                    <?php $user = $block->getUserInfo($userId) ?>
+                    <strong>
+                        <?= $escaper->escapeHtml($user->getFirstname()) ?>
+                        <?= $escaper->escapeHtml($user->getLastname()) ?>
+                    </strong>
+                <?php else : ?>
+                    <strong><?= __('Anonymous') ?> </strong>
+                <?php endif; ?>
+            </p>
+
+            <p>
+                <?= $review->getDetail() ?>
+            </p>
+            <div>
+                <small>
+                    (<?= $review->getCreatedAt() ?>)
+                </small>
+            </div>
+        </li>
+    <?php endforeach; ?>
+</ul>
+
+
+

@@ -4,7 +4,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="product.info.details">
-            <block class="Perspective\Review\Block\Product\Review"
+            <block class="Perspective\Review\Block\Product\ReviewList"
                    name="perspective_reviews.tab"
                    as="perspective_reviews"
                    template="Perspective_Review::reviews.phtml"

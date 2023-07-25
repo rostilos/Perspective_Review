@@ -3,6 +3,7 @@
 namespace Perspective\Review\Block\Product;
 
 use Magento\Customer\Model\Customer;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\View\Element\Template;
@@ -12,7 +13,7 @@ use Perspective\Review\Model\ConfigManager;
 use Magento\Customer\Model\CustomerFactory;
 
 
-class Review extends Template
+class ReviewList extends Template
 {
 
     private ProductFactory $productFactory;
@@ -59,7 +60,7 @@ class Review extends Template
      *
      * @return AbstractCollection
      */
-    public function getReviews(): AbstractCollection
+    public function getReviewsCollection(): AbstractCollection
     {
         $productId = $this->getRequest()->getParam('id');
         return $this->reviewFactory->create()->getCollection()
