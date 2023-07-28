@@ -1,5 +1,3 @@
-<h2>Perspective Reviews</h2>
-
 <?php
 /** @var Perspective\Review\Block\Product\ReviewList $block */
 /** @var Magento\Framework\Escaper $escaper */
@@ -19,7 +17,7 @@ if (!$block->isEnabled()) {
         <form action="<?= $escaper->escapeUrl($block->getActionUrl()) ?>"
               class="review-form"
               method="post"
-              id="review-form"
+              id="perspective-review-form"
         >
             <?= $block->getBlockHtml('formkey') ?>
             <?= $block->getChildHtml('form_fields_before') ?>
@@ -48,37 +46,3 @@ if (!$block->isEnabled()) {
         </form>
     </div>
 </div>
-
-<div style="clear: both"></div>
-
-
-<ul class="items review-items">
-    <?php foreach ($reviews as $review) : ?>
-        <li class="item review-item">
-            <p>
-                <small><?= __('Review by:') ?></small>
-                <?php if ($userId = $review->getUserId()) : ?>
-                    <?php $user = $block->getUserInfo($userId) ?>
-                    <strong>
-                        <?= $escaper->escapeHtml($user->getFirstname()) ?>
-                        <?= $escaper->escapeHtml($user->getLastname()) ?>
-                    </strong>
-                <?php else : ?>
-                    <strong><?= __('Anonymous') ?> </strong>
-                <?php endif; ?>
-            </p>
-
-            <p>
-                <?= $review->getDetail() ?>
-            </p>
-            <div>
-                <small>
-                    (<?= $review->getCreatedAt() ?>)
-                </small>
-            </div>
-        </li>
-    <?php endforeach; ?>
-</ul>
-
-
-

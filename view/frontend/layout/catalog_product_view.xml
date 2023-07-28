@@ -7,10 +7,14 @@
             <block class="Perspective\Review\Block\Product\ReviewList"
                    name="perspective_reviews.tab"
                    as="perspective_reviews"
-                   template="Perspective_Review::reviews.phtml"
+                   template="Perspective_Review::reviews-list.phtml"
                    group="detailed_info"
                    ifconfig="perspective_review/general/enable"
             >
+                <block class="Perspective\Review\Block\Product\ReviewList"
+                       name="perspective.reviews.add-new" as="add-new-form"
+                       template="Perspective_Review::add-new-form.phtml"/>
+
                 <arguments>
                     <argument name="sort_order" xsi:type="string">30</argument>
                     <argument translate="true" name="title" xsi:type="string">Perspective Reviews</argument>
