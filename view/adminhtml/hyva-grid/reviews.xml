@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<grid xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Hyva_Admin:etc/hyva-grid.xsd">
+    <source>
+        <arrayProvider>Perspective\Review\Model\Backend\ReviewsListProvider</arrayProvider>
+    </source>
+    <columns>
+        <include>
+            <column name="review_id" label="ID" />
+            <column name="product_id" label="Product ID" />
+            <column name="detail" label="Review Content"  />
+            <column name="created_at" label="Created" />
+            <column name="user_id" label="Customer ID" />
+        </include>
+    </columns>
+    <navigation>
+        <sorting>
+            <defaultSortByColumn>created_at</defaultSortByColumn>
+            <defaultSortDirection>desc</defaultSortDirection>
+        </sorting>
+    </navigation>
+</grid>

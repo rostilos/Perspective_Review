@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="hyva_admin_grid"/>
+
+    <body>
+        <referenceBlock name="page.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Perspective Reviews</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceContainer name="content">
+            <block class="Hyva\Admin\Block\Adminhtml\HyvaGrid" name="reviews">
+                <arguments>
+                    <argument name="grid_name" xsi:type="string">reviews</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

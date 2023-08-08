@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Perspective_Review::menu"
+             sortOrder="10"
+             title="Perspective"
+             module="Perspective_Review"
+             resource="Perspective_Review::content"/>
+        <add id="Perspective_Review::all_reviews"
+             sortOrder="10"
+             parent="Perspective_Review::menu"
+             title="All Reviews"
+             module="Perspective_Review"
+             action="perspective_review/reviews/index"
+             resource="Perspective_Review::content"/>
+    </menu>
+</config>
