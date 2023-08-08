@@ -3,7 +3,6 @@
 namespace Perspective\Review\Block\Product;
 
 use Magento\Customer\Model\Customer;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\View\Element\Template;
@@ -12,16 +11,37 @@ use Perspective\Review\Model\ReviewFactory;
 use Perspective\Review\Model\ConfigManager;
 use Magento\Customer\Model\CustomerFactory;
 
-
 class ReviewList extends Template
 {
 
+    /**
+     * @var ProductFactory
+     */
     private ProductFactory $productFactory;
+
+    /**
+     * @var ReviewFactory
+     */
     private ReviewFactory $reviewFactory;
+
+    /**
+     * @var ConfigManager
+     */
     private ConfigManager $configManager;
+
+    /**
+     * @var CustomerFactory
+     */
     private CustomerFactory $customerFactory;
 
-
+    /**
+     * @param Template\Context $context
+     * @param ProductFactory $productFactory
+     * @param ReviewFactory $reviewFactory
+     * @param ConfigManager $configManager
+     * @param CustomerFactory $customerFactory
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         ProductFactory   $productFactory,
@@ -29,8 +49,7 @@ class ReviewList extends Template
         ConfigManager    $configManager,
         CustomerFactory  $customerFactory,
         array            $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->productFactory = $productFactory;
         $this->reviewFactory = $reviewFactory;
@@ -38,6 +57,11 @@ class ReviewList extends Template
         $this->customerFactory = $customerFactory;
     }
 
+    /**
+     * Is Enabled flag
+     *
+     * @return bool
+     */
     public function isEnabled(): bool
     {
         return $this->configManager->isEnabled();
@@ -56,7 +80,7 @@ class ReviewList extends Template
 
 
     /**
-     * Retrieve reviews collection
+     * Retrieve reviews collection for current product
      *
      * @return AbstractCollection
      */
@@ -66,7 +90,6 @@ class ReviewList extends Template
         return $this->reviewFactory->create()->getCollection()
             ->addFieldToFilter('product_id', $productId)
             ->setOrder('created_at', 'DESC');
-
     }
 
     /**
@@ -80,12 +103,12 @@ class ReviewList extends Template
     }
 
     /**
-     * Return user info
+     *  Retrieve User Info
      *
-     * @param $userId
+     * @param int $userId
      * @return Customer
      */
-    public function getUserInfo($userId): Customer
+    public function getUserInfo(int $userId): Customer
     {
         return $this->customerFactory->create()->load($userId);
     }
