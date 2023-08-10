@@ -2,6 +2,8 @@
 
 namespace Perspective\Review\Model\ResourceModel\Review;
 
+use Perspective\Review\Model\ResourceModel\Review;
+
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     /**
@@ -11,6 +13,9 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct(): void
     {
-        $this->_init('Perspective\Review\Model\Review', 'Perspective\Review\Model\ResourceModel\Review');
+        $this->_init(
+            \Perspective\Review\Model\Review::class,
+            Review::class
+        );
     }
 }
