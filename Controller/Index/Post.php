@@ -111,11 +111,12 @@ class Post implements HttpPostActionInterface
             return $resultRedirect;
         }
 
+        $review = $this->reviewFactory->create()->setData($data);
+
         $product = $this->productRepository->getById($productId);
 
-        if (!empty($data)) {
-            $review = $this->reviewFactory->create()->setData($data);
-
+        $validate = $review->validate();
+        if ($validate === true) {
             try {
                 $review->setProductId($product->getId())
                     ->setCreatedAt(date('Y-m-d H:i:s'))
@@ -127,7 +128,13 @@ class Post implements HttpPostActionInterface
                 $this->messageManager->addErrorMessage($e->getMessage());
             }
         } else {
-            $this->messageManager->addErrorMessage(__('We can\'t post your review right now.'));
+            if (is_array($validate)) {
+                foreach ($validate as $errorMessage) {
+                    $this->messageManager->addErrorMessage($errorMessage);
+                }
+            } else {
+                $this->messageManager->addErrorMessage(__('We can\'t post your review right now.'));
+            }
         }
 
         return $resultRedirect;
