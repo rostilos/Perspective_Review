@@ -2,27 +2,23 @@
 
 namespace Perspective\Review\Block\Product;
 
-use Magento\Customer\Model\Customer;
-use Magento\Framework\Model\AbstractModel;
+use Magento\Customer\Api\Data\CustomerInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\View\Element\Template;
-use Magento\Catalog\Model\ProductFactory;
-use Perspective\Review\Model\ReviewFactory;
+use Perspective\Review\Model\ResourceModel\Review\CollectionFactory as ReviewCollectionFactory;
 use Perspective\Review\Model\ConfigManager;
-use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Catalog\Helper\Data as CatalogHelper;
+use Magento\Catalog\Model\Product;
 
 class ReviewList extends Template
 {
-
     /**
-     * @var ProductFactory
+     * @var ReviewCollectionFactory
      */
-    private ProductFactory $productFactory;
-
-    /**
-     * @var ReviewFactory
-     */
-    private ReviewFactory $reviewFactory;
+    private ReviewCollectionFactory $collectionFactory;
 
     /**
      * @var ConfigManager
@@ -30,31 +26,36 @@ class ReviewList extends Template
     private ConfigManager $configManager;
 
     /**
-     * @var CustomerFactory
+     * @var CatalogHelper
      */
-    private CustomerFactory $customerFactory;
+    private CatalogHelper $catalogHelper;
+
+    /**
+     * @var CustomerRepositoryInterface
+     */
+    private CustomerRepositoryInterface $customerRepository;
 
     /**
      * @param Template\Context $context
-     * @param ProductFactory $productFactory
-     * @param ReviewFactory $reviewFactory
+     * @param ReviewCollectionFactory $collectionFactory
      * @param ConfigManager $configManager
-     * @param CustomerFactory $customerFactory
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param CatalogHelper $catalogHelper
      * @param array $data
      */
     public function __construct(
-        Template\Context $context,
-        ProductFactory   $productFactory,
-        ReviewFactory    $reviewFactory,
-        ConfigManager    $configManager,
-        CustomerFactory  $customerFactory,
-        array            $data = []
+        Template\Context            $context,
+        ReviewCollectionFactory     $collectionFactory,
+        ConfigManager               $configManager,
+        CustomerRepositoryInterface $customerRepository,
+        CatalogHelper               $catalogHelper,
+        array                       $data = []
     ) {
         parent::__construct($context, $data);
-        $this->productFactory = $productFactory;
-        $this->reviewFactory = $reviewFactory;
+        $this->collectionFactory = $collectionFactory;
         $this->configManager = $configManager;
-        $this->customerFactory = $customerFactory;
+        $this->customerRepository = $customerRepository;
+        $this->catalogHelper = $catalogHelper;
     }
 
     /**
@@ -70,14 +71,12 @@ class ReviewList extends Template
     /**
      * Retrieve current product data
      *
-     * @return AbstractModel
+     * @return Product|null
      */
-    public function getProduct(): AbstractModel
+    public function getProduct(): Product|null
     {
-        $productId = $this->getRequest()->getParam('id');
-        return $this->productFactory->create()->load($productId);
+        return $this->catalogHelper->getProduct();
     }
-
 
     /**
      * Retrieve reviews collection for current product
@@ -86,8 +85,8 @@ class ReviewList extends Template
      */
     public function getReviewsCollection(): AbstractCollection
     {
-        $productId = $this->getRequest()->getParam('id');
-        return $this->reviewFactory->create()->getCollection()
+        $productId = $this->getProduct()->getId();
+        return $this->collectionFactory->create()
             ->addFieldToFilter('product_id', $productId)
             ->setOrder('created_at', 'DESC');
     }
@@ -105,11 +104,17 @@ class ReviewList extends Template
     /**
      *  Retrieve User Info
      *
-     * @param int $userId
-     * @return Customer
+     * @param int $customerId
+     * @return CustomerInterface|null
+     * @throws LocalizedException
      */
-    public function getUserInfo(int $userId): Customer
+    public function getUserInfo(int $customerId): ?CustomerInterface
     {
-        return $this->customerFactory->create()->load($userId);
+        try {
+            $customer = $this->customerRepository->getById($customerId);
+        } catch (NoSuchEntityException $e) {
+            return null;
+        }
+        return $customer;
     }
 }
