@@ -124,7 +124,7 @@ class Post implements HttpPostActionInterface
 
                 $this->messageManager->addSuccessMessage(__('You have successfully posted a review.'));
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage(__('We can\'t post your review right now.'));
+                $this->messageManager->addErrorMessage($e->getMessage());
             }
         } else {
             $this->messageManager->addErrorMessage(__('We can\'t post your review right now.'));
