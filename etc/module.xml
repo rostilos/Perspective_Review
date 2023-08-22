@@ -5,6 +5,7 @@
     <module name="Perspective_Review" setup_version="1.0.2">
         <sequence>
             <module name="Magento_Catalog"/>
+            <module name="Hyva_Admin"/>
         </sequence>
     </module>
 </config>
