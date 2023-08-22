@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": "~8.1.0||~8.2.0",
-        "magento/framework": "~100.0.4"
+        "magento/framework": "*"
     },
     "autoload": {
         "files": [ "registration.php" ],
