@@ -8,3 +8,5 @@ Stores -> Configuration -> Perspective -> Perspective Review
 ## List of all reviews posted : 
 ![2023-08-10_14-00](https://github.com/rostilos/Perspective_Reviews/assets/85498741/4dc71ad7-6d1e-4edb-a9f4-3fcc8a7b5cb2)
 
+## GrapgQl module : 
+https://github.com/rostilos/Perspective_ReviewGraphQl
