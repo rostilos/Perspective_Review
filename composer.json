@@ -1,0 +1,20 @@
+{
+    "name": "perspective/perspective-magento2-rewiew",
+    "description": "A Magento 2 module that adds custom functionality for posting reviews on the product page",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": "~8.1.0||~8.2.0",
+        "magento/framework": "~100.0.4"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Perspective\\Review\\": ""
+        }
+    }
+}
