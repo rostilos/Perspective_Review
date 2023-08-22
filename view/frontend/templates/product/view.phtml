@@ -1,0 +1,22 @@
+<?php
+
+/** @var View $block */
+/** @var Escaper $escaper */
+
+use Perspective\Review\Block\Product\View;
+use Magento\Framework\Escaper;
+
+?>
+<?= $block->getChildHtml() ?>
+<div id="perspective-review-container" data-role="product-review"></div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Perspective_Review/js/process-reviews": {
+                "productReviewUrl": "<?= $escaper->escapeJs($block->getProductReviewUrl()) ?>",
+                "reviewsTabSelector": "#tab-label-perspective_reviews"
+            }
+        }
+    }
+</script>

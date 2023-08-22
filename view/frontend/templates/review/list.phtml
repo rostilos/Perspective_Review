@@ -5,9 +5,6 @@
 /** @var Magento\Framework\Escaper $escaper */
 
 $reviews = $block->getReviewsCollection();
-if (!$block->isEnabled()) {
-    return;
-}
 ?>
 
 <?= $block->getChildHtml('add-new-form') ?>
@@ -42,6 +39,7 @@ if (!$block->isEnabled()) {
         </li>
     <?php endforeach; ?>
 </ul>
+
 
 
 

@@ -1,5 +1,5 @@
 <?php
-/** @var Perspective\Review\Block\Product\ReviewList $block */
+/** @var Perspective\Review\Block\Product\View $block */
 /** @var Magento\Framework\Escaper $escaper */
 
 $reviews = $block->getReviewsCollection();
@@ -14,7 +14,7 @@ if (!$block->isEnabled()) {
         </strong>
     </div>
     <div class="block-content">
-        <form action="<?= $escaper->escapeUrl($block->getActionUrl()) ?>"
+        <form action="<?= $escaper->escapeUrl($block->getPostActionUrl()) ?>"
               class="review-form"
               method="post"
               id="perspective-review-form"

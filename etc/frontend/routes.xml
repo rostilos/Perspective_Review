@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="standard">
-        <route id="perspective" frontName="perspective">
+        <route id="perspective_review" frontName="perspective_review">
             <module name="Perspective_Review" />
         </route>
     </router>
