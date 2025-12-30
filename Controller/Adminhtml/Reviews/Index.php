@@ -4,7 +4,6 @@ namespace Perspective\Review\Controller\Adminhtml\Reviews;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\View\Result\PageFactory;
 
 class Index implements HttpGetActionInterface
 {
