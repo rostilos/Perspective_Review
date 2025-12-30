@@ -43,14 +43,4 @@ class ConfigManager
     {
         return (bool)$this->getConfig(self::GROUP_GENERAL, 'enable');
     }
-
-    /**
-     * Is guests reviews allowed flag
-     *
-     * @return bool
-     */
-    public function isGuestReviewsAllowed(): bool
-    {
-        return (bool)$this->getConfig(self::GROUP_GENERAL, 'allow_guest');
-    }
 }
