@@ -17,11 +17,4 @@ class Index implements HttpGetActionInterface
     ) {
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function execute(): ResultInterface
-    {
-        return $this->resultPageFactory->create();
-    }
 }
