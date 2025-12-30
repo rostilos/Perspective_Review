@@ -1,6 +1,7 @@
 A module developed as part of a roadmap implementation that adds custom functionality for posting reviews on the product page
 
 
+
 ## Module Settings : 
 Stores -> Configuration -> Perspective -> Perspective Review
 ![2023-08-10_13-56](https://github.com/rostilos/Perspective_Reviews/assets/85498741/feb36f8b-08e0-4c4a-9296-ef9e81bc7201)
