@@ -2,7 +2,7 @@
 
 namespace Perspective\Review\Controller\Adminhtml\Reviews;
 
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpGetActionInterface
 use Magento\Framework\Controller\ResultInterface
 
 class Index implements HttpGetActionInterface
